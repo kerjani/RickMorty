@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isFavourite"
+            type="Boolean" />
+
+        <variable
+            name="character"
+            type="com.kernacs.rickmorty.data.entities.CharacterEntity" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_medium">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/picture"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                app:layout_anchorGravity="top|center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImage="@{character.imageUrl}"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="5dp" />
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/Theme.RickMorty.DetailNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@{character.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/picture"
+                tools:text="Sancez" />
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/Theme.RickMorty.DetailValueText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@{character.status}"
+                android:textAllCaps="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                app:statusColor="@{character.status}"
+                tools:text="Dead" />
+
+
+            <TextView
+                android:id="@+id/species_label"
+                style="@style/Theme.RickMorty.DetailLabelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/species_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/status"
+                tools:text="Human" />
+
+            <TextView
+                android:id="@+id/species_value"
+                style="@style/Theme.RickMorty.DetailValueText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{character.species}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/species_label"
+                tools:text="species" />
+
+            <TextView
+                android:id="@+id/origin_label"
+                style="@style/Theme.RickMorty.DetailLabelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/origin_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/species_value" />
+
+            <TextView
+                android:id="@+id/origin_value"
+                style="@style/Theme.RickMorty.DetailValueText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_small"
+                android:text="@{character.origin}"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/origin_label"
+                tools:text="the origin location" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/gender_label"
+                style="@style/Theme.RickMorty.DetailLabelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_label"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/status" />
+
+            <TextView
+                android:id="@+id/gender_value"
+                style="@style/Theme.RickMorty.DetailValueText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{character.gender}"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/gender_label"
+                tools:text="Male" />
+
+            <TextView
+                android:id="@+id/location_label"
+                style="@style/Theme.RickMorty.DetailLabelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_label"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/gender_value" />
+
+            <TextView
+                android:id="@+id/location_value"
+                style="@style/Theme.RickMorty.DetailValueText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_small"
+                android:text="@{character.location}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/location_label"
+                tools:text="Earth" />
+
+
+            <TextView
+                android:id="@+id/episodes_label"
+                style="@style/Theme.RickMorty.DetailNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:text="@string/episodes_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/origin_value" />
+
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/episodes_label" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progress">
+
+                <include
+                    android:id="@+id/empty"
+                    layout="@layout/empty_view" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/episodes_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/episodes_label"
+                    tools:listitem="@layout/episode_list_item" />
+            </FrameLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@{isFavourite ? @drawable/ic_star : @drawable/ic_star_outline}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

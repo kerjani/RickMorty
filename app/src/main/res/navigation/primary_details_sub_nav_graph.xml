@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_details"
+    app:startDestination="@id/fragment_item_detail">
+    <fragment
+        android:id="@+id/fragment_item_detail"
+        android:name="com.kernacs.rickmorty.ui.characters.details.CharacterDetailFragment"
+        android:label="@string/title_item_detail"
+        tools:layout="@layout/fragment_item_detail">
+        <argument
+            android:name="item_id"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/episode_detail_fragment"
+        android:name="com.kernacs.rickmorty.ui.episodes.details.EpisodeDetailsFragment"
+        android:label="@string/episode_detail_title"
+        tools:layout="@layout/fragment_episode_details">
+        <argument
+            android:name="episode_id"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favourite_characters_fragment"
+        android:name="com.kernacs.rickmorty.ui.favourites.FavouriteCharactersFragment"
+        android:label="@string/favourite_characters_title"
+        tools:layout="@layout/fragment_episode_details"/>
+</navigation>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Adding the same root's ID for view binding as other layout configurations -->
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kernacs.rickmorty.ui.characters.list.CharacterListViewModel" />
+    </data>
+
+<!--    <Toolbar-->
+<!--        android:id="@+id/toolBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:onRefreshListener="@{() -> viewModel.refreshData()}"
+        app:refreshing="@{viewModel.isLoading}">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_list"
+                android:name="com.kernacs.rickmorty.ItemListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="com.kernacs.rickmorty.ui.characters.CharactersHostActivity"
+                tools:listitem="@layout/character_list_item" />
+
+            <include
+                android:id="@+id/empty"
+                layout="@layout/empty_view"/>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+</layout>

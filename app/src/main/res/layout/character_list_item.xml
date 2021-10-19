@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="character"
+            type="com.kernacs.rickmorty.data.entities.CharacterEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/picture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadImage="@{character.imageUrl}"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+
+        <TextView
+            android:id="@+id/status"
+            style="@style/Theme.RickMorty.ListStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="@{character.status}"
+            app:layout_constraintStart_toEndOf="@id/picture"
+            app:layout_constraintTop_toTopOf="parent"
+            app:statusColor="@{character.status}"
+            tools:text="Dead" />
+
+        <TextView
+            android:id="@+id/content"
+            style="@style/Theme.RickMorty.ListNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="@{character.name}"
+            app:layout_constraintStart_toEndOf="@id/picture"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            tools:text="Rick Sanchez" />
+
+        <TextView
+            android:id="@+id/origin"
+            style="@style/Theme.RickMorty.ListInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="@{character.origin}"
+            app:layout_constraintStart_toEndOf="@id/picture"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            tools:text="Origin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
