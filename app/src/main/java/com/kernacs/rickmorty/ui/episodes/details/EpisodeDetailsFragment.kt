@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kernacs.rickmorty.R
+import com.kernacs.rickmorty.base.BaseFragment
 import com.kernacs.rickmorty.data.entities.EpisodeEntity
 import com.kernacs.rickmorty.data.entities.toTwoLineEpisode
 import com.kernacs.rickmorty.databinding.FragmentEpisodeDetailsBinding
@@ -21,7 +21,7 @@ import com.kernacs.rickmorty.ui.characters.list.CharacterListRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EpisodeDetailsFragment : Fragment() {
+class EpisodeDetailsFragment : BaseFragment() {
 
     private val viewModel: EpisodeDetailsViewModel by viewModels()
 
@@ -32,8 +32,11 @@ class EpisodeDetailsFragment : Fragment() {
 
     private val charactersAdapter: CharacterListRecyclerViewAdapter
         get() = list.adapter as CharacterListRecyclerViewAdapter
+
     private lateinit var episode: EpisodeEntity
 
+    override val trackedScreenName: String
+        get() = "EpisodeDetails"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

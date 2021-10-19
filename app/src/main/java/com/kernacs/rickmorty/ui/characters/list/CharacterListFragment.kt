@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -12,28 +11,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kernacs.rickmorty.R
+import com.kernacs.rickmorty.base.BaseFragment
 import com.kernacs.rickmorty.data.entities.CharacterEntity
 import com.kernacs.rickmorty.databinding.FragmentItemListBinding
 import com.kernacs.rickmorty.ui.characters.details.CharacterDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-/**
- * A Fragment representing a list of Pings. This fragment
- * has different presentations for handset and larger screen devices. On
- * handsets, the fragment presents a list of items, which when touched,
- * lead to a {@link ItemDetailFragment} representing
- * item details. On larger screens, the Navigation controller presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 @AndroidEntryPoint
-class CharacterListFragment : Fragment() {
+class CharacterListFragment : BaseFragment() {
 
     private val viewModel: CharacterListViewModel by viewModels()
     private lateinit var binding: FragmentItemListBinding
     private val items = ArrayList<CharacterEntity>()
     private val adapter: CharacterListRecyclerViewAdapter
         get() = binding.itemList.adapter as CharacterListRecyclerViewAdapter
+    override val trackedScreenName: String
+        get() = "CharacterList"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,19 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.kernacs.rickmorty.base.BaseFragment
 import com.kernacs.rickmorty.databinding.FragmentFavouriteCharactersBinding
 import com.kernacs.rickmorty.ui.characters.list.CharacterListRecyclerViewAdapter
 import com.kernacs.rickmorty.ui.episodes.details.EpisodeDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavouriteCharactersFragment : Fragment() {
+class FavouriteCharactersFragment : BaseFragment() {
 
     private val viewModel: FavouriteCharactersViewModel by viewModels()
 
@@ -28,6 +28,9 @@ class FavouriteCharactersFragment : Fragment() {
 
     private val charactersAdapter: CharacterListRecyclerViewAdapter
         get() = list.adapter as CharacterListRecyclerViewAdapter
+
+    override val trackedScreenName: String
+        get() = "FavouriteCharacters"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
