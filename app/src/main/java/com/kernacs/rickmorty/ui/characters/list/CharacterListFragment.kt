@@ -101,7 +101,7 @@ class CharacterListFragment : BaseFragment() {
         binding.apply {
             if (adapter.itemCount == 0) {
                 empty?.emptyContainer?.isVisible = true
-                empty?.retryButton?.setOnClickListener { viewModel?.getItems() }
+                empty?.retryButton?.setOnClickListener { viewModel?.loadNewPage() }
                 binding.itemList.isVisible = false
             } else {
                 binding.itemList.isVisible = true
@@ -138,10 +138,6 @@ class CharacterListFragment : BaseFragment() {
         viewModel.refreshData()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getItems()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_characters, menu)

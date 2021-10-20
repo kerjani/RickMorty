@@ -17,17 +17,6 @@ class RickAndMortyRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : Repository {
 
-    override suspend fun getCharacters(): Result<List<CharacterEntity>> =
-        withContext(ioDispatcher) {
-            localDataSource.getCharacters().let {
-                if (it.isEmpty()) {
-                    getCharacters(1)
-                } else {
-                    Result.Success(it)
-                }
-            }
-        }
-
     override suspend fun getCharacters(page: Int?): Result<List<CharacterEntity>> =
         withContext(ioDispatcher) {
             when (val response = remoteDataSource.getCharacters(page)) {

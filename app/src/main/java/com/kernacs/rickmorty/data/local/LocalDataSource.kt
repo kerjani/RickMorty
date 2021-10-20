@@ -5,7 +5,6 @@ import com.kernacs.rickmorty.data.entities.EpisodeEntity
 import com.kernacs.rickmorty.data.entities.StarredEntity
 
 interface LocalDataSource {
-    suspend fun getCharacters(): List<CharacterEntity>
     suspend fun getCharacter(id: Int): CharacterEntity?
     suspend fun saveCharacters(items: List<CharacterEntity>)
     suspend fun deleteCharacters()

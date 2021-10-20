@@ -16,9 +16,6 @@ class RickAndMortyLocalDataSource @Inject constructor(
     private val favouritesDao: FavouritesDao,
     private val ioDispatcher: CoroutineDispatcher
 ) : LocalDataSource {
-    override suspend fun getCharacters(): List<CharacterEntity> = withContext(ioDispatcher) {
-        return@withContext charactersDao.getCharacters()
-    }
 
     override suspend fun getCharacter(id: Int): CharacterEntity? = withContext(ioDispatcher) {
         return@withContext charactersDao.getCharacterBId(id)

@@ -6,7 +6,6 @@ import com.kernacs.rickmorty.data.entities.EpisodeEntity
 import com.kernacs.rickmorty.util.Result
 
 interface Repository {
-    suspend fun getCharacters(): Result<List<CharacterEntity>>
     suspend fun getCharacters(page: Int?): Result<List<CharacterEntity>>
     suspend fun getCharacter(id: Int): Result<CharacterEntity>
     suspend fun saveCharacters(items: List<CharacterEntity>)

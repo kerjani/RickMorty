@@ -30,31 +30,6 @@ class CharacterListViewModel @Inject constructor(
         }
     }
 
-    fun getItems() {
-        isLoading.value = true
-        viewModelScope.launch {
-            when (val result = repository.getCharacters()) {
-                is Result.Success -> {
-                    isLoading.value = false
-                    if (result.data.isNullOrEmpty()) {
-                        Log.d(TAG, "Loaded data is null or empty!")
-                        loadNewPage()
-                    } else {
-                        items.value = result.data
-                        Log.d(TAG, "Loaded data is successful")
-                        error.value = null
-                    }
-                }
-                is Result.Error -> {
-                    Log.d(TAG, "Error during data load: ${result.exception}")
-                    isLoading.value = false
-                    error.value = result.exception.message
-                }
-                is Result.Loading -> isLoading.postValue(true)
-            }
-        }
-    }
-
     fun loadNewPage() {
         Log.d(TAG, "Attempt to refresh data")
         isLoading.value = true
