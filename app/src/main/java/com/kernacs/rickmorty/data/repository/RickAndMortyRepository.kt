@@ -67,55 +67,48 @@ class RickAndMortyRepository @Inject constructor(
             localDataSource.saveCharacters(items)
         }
 
-    override suspend fun deleteCharacters() =
-        withContext(ioDispatcher) {
-            localDataSource.deleteCharacters()
-        }
+    override suspend fun deleteCharacters() = localDataSource.deleteCharacters()
 
-    override suspend fun deleteEpisodes() =
-        withContext(ioDispatcher) {
-            localDataSource.deleteEpisodes()
-        }
+
+    override suspend fun deleteEpisodes() = localDataSource.deleteEpisodes()
+
 
     override suspend fun saveEpisodes(items: List<EpisodeEntity>) =
-        withContext(ioDispatcher) {
-            localDataSource.saveEpisodes(items)
-        }
+        localDataSource.saveEpisodes(items)
+
 
     override suspend fun getEpisodes(ids: List<Int>): Result<List<EpisodeEntity>> =
-        withContext(ioDispatcher) {
-            val episodes = ids.mapNotNull {
-                localDataSource.getEpisode(it) ?: kotlin.run {
-                    when (val result = getEpisode(it)) {
-                        is Result.Success -> {
-                            result.data
-                        }
-                        else -> null
+        ids.mapNotNull {
+            localDataSource.getEpisode(it) ?: run {
+                when (val result = getEpisode(it)) {
+                    is Result.Success -> {
+                        result.data
                     }
+                    else -> null
                 }
             }
-            Result.Success(episodes)
+        }.let {
+            Result.Success(it)
         }
 
+
     override suspend fun getEpisode(id: Int): Result<EpisodeEntity> =
-        withContext(ioDispatcher) {
-            localDataSource.getEpisode(id)?.let {
-                Result.Success(it)
-            } ?: when (val downloadedResult = remoteDataSource.getEpisode(id)) {
-                is Result.Success -> {
-                    downloadedResult.data?.let {
-                        val entity = it.toEntity()
-                        localDataSource.saveEpisodes(listOf(entity))
-                        Result.Success(entity)
-                    }
-                        ?: Result.Error(Exception("Download of character with id $id has been failed"))
+        localDataSource.getEpisode(id)?.let {
+            Result.Success(it)
+        } ?: when (val downloadedResult = remoteDataSource.getEpisode(id)) {
+            is Result.Success -> {
+                downloadedResult.data?.let {
+                    val entity = it.toEntity()
+                    localDataSource.saveEpisodes(listOf(entity))
+                    Result.Success(entity)
                 }
-                is Result.Error -> {
-                    Result.Error(downloadedResult.exception)
-                }
-                Result.Loading -> {
-                    Result.Loading
-                }
+                    ?: Result.Error(Exception("Download of character with id $id has been failed"))
+            }
+            is Result.Error -> {
+                Result.Error(downloadedResult.exception)
+            }
+            Result.Loading -> {
+                Result.Loading
             }
         }
 }

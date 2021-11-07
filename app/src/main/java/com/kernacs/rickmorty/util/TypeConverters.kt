@@ -13,16 +13,6 @@ class TypeConverters {
     fun dateToString(date: Date): String = date.toIsoString()
 
     @TypeConverter
-    fun restoreStringList(listOfString: String): List<String>? {
-        return Gson().fromJson(listOfString, object : TypeToken<List<String>>() {}.type)
-    }
-
-    @TypeConverter
-    fun saveStringList(listOfString: List<String?>?): String? {
-        return Gson().toJson(listOfString)
-    }
-
-    @TypeConverter
     fun restoreIntList(listOfInt: String): List<Int>? {
         return Gson().fromJson(listOfInt, object : TypeToken<List<Int>>() {}.type)
     }

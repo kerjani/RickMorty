@@ -124,7 +124,8 @@ class CharacterListFragment : BaseFragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!binding.swipeRefresh.isRefreshing) {
-                    if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == recyclerView.adapter!!.itemCount - 1) {
+                    if ((recyclerView.layoutManager as LinearLayoutManager)
+                            .findLastCompletelyVisibleItemPosition() == recyclerView.adapter?.itemCount ?: 0 - 1) {
                         //bottom of list!
                         viewModel.loadNewPage()
                     }

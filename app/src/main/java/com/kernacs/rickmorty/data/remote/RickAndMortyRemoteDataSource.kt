@@ -4,74 +4,63 @@ import com.kernacs.rickmorty.data.dto.CharactersResponseDto
 import com.kernacs.rickmorty.data.dto.EpisodeDto
 import com.kernacs.rickmorty.data.remote.api.RickAndMortyApiInterface
 import com.kernacs.rickmorty.util.Result
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RickAndMortyRemoteDataSource @Inject constructor(
-    private val ioDispatcher: CoroutineDispatcher,
     private val api: RickAndMortyApiInterface
 ) : RemoteDataSource() {
 
     override suspend fun getCharacters(page: Int?): Result<List<CharactersResponseDto.CharacterDto>> =
-        withContext(ioDispatcher) {
-            return@withContext try {
-                val result = api.getAllCharacters(page)
-                if (result.isSuccessful) {
-                    result.body()?.let {
-                        Result.Success(it.results)
-                    }
-                        ?: Result.Error(Exception("Download of characters at page $page has been failed"))
-                } else {
-                    Result.Error(Exception(result.errorBody().toString()))
+        try {
+            val result = api.getAllCharacters(page)
+            if (result.isSuccessful) {
+                result.body()?.let {
+                    Result.Success(it.results)
                 }
-            } catch (exception: Exception) {
-                Result.Error(exception)
+                    ?: Result.Error(Exception("Download of characters at page $page has been failed"))
+            } else {
+                Result.Error(Exception(result.errorBody().toString()))
             }
+        } catch (exception: Exception) {
+            Result.Error(exception)
         }
 
-    override suspend fun getCharacter(id: Int): Result<CharactersResponseDto.CharacterDto> =
-        withContext(ioDispatcher) {
-            return@withContext try {
-                val result = api.getCharacterDetails(id)
-                if (result.isSuccessful) {
-                    Result.Success(result.body())
-                } else {
-                    Result.Error(Exception(result.errorBody().toString()))
-                }
-            } catch (exception: Exception) {
-                Result.Error(exception)
-            }
-        }
 
-    override suspend fun getEpisodes(ids: IntArray): Result<List<EpisodeDto>> =
-        withContext(ioDispatcher) {
-            return@withContext try {
-                val result = api.getEpisodes(ids)
-                if (result.isSuccessful) {
-                    Result.Success(result.body())
-                } else {
-                    Result.Error(Exception(result.errorBody().toString()))
-                }
-            } catch (exception: Exception) {
-                Result.Error(exception)
-            }
+    override suspend fun getCharacter(id: Int): Result<CharactersResponseDto.CharacterDto> = try {
+        val result = api.getCharacterDetails(id)
+        if (result.isSuccessful) {
+            Result.Success(result.body())
+        } else {
+            Result.Error(Exception(result.errorBody().toString()))
         }
+    } catch (exception: Exception) {
+        Result.Error(exception)
+    }
 
-    override suspend fun getEpisode(id: Int): Result<EpisodeDto> =
-        withContext(ioDispatcher) {
-            return@withContext try {
-                val result = api.getEpisodeDetail(id)
-                if (result.isSuccessful) {
-                    Result.Success(result.body())
-                } else {
-                    Result.Error(Exception(result.errorBody().toString()))
-                }
-            } catch (exception: Exception) {
-                Result.Error(exception)
-            }
 
+    override suspend fun getEpisodes(ids: IntArray): Result<List<EpisodeDto>> = try {
+        val result = api.getEpisodes(ids)
+        if (result.isSuccessful) {
+            Result.Success(result.body())
+        } else {
+            Result.Error(Exception(result.errorBody().toString()))
         }
+    } catch (exception: Exception) {
+        Result.Error(exception)
+    }
+
+
+    override suspend fun getEpisode(id: Int): Result<EpisodeDto> = try {
+        val result = api.getEpisodeDetail(id)
+        if (result.isSuccessful) {
+            Result.Success(result.body())
+        } else {
+            Result.Error(Exception(result.errorBody().toString()))
+        }
+    } catch (exception: Exception) {
+        Result.Error(exception)
+    }
+
 
 /*
 

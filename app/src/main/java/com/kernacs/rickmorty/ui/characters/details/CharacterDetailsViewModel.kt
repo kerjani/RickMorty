@@ -35,9 +35,14 @@ class CharacterDetailsViewModel @Inject constructor(
             when (val result = repository.getCharacter(id)) {
                 is Result.Success -> {
                     isLoading.value = false
-                    characterData.value = result.data!!
-                    getEpisodes(result.data.episodeIds)
-                    Log.d(TAG, "Refresh of the character data is successful: ${result.data}")
+                    result.data?.let {
+                        characterData.value = it
+                        getEpisodes(result.data.episodeIds)
+                        Log.d(TAG, "Refresh of the character data is successful: ${result.data}")
+                    } ?: run {
+                        error.value = "No data found with id: $id"
+                    }
+
                 }
                 is Result.Error -> {
                     Log.d(TAG, "Error during data refresh: ${result.exception}")
@@ -46,7 +51,7 @@ class CharacterDetailsViewModel @Inject constructor(
                 }
                 is Result.Loading -> isLoading.postValue(true)
             }
-            isFavourite.value = localDataSource.getFavourite(id)!=null
+            isFavourite.value = localDataSource.getFavourite(id) != null
         }
     }
 
@@ -57,7 +62,11 @@ class CharacterDetailsViewModel @Inject constructor(
             when (val result = repository.getEpisodes(ids)) {
                 is Result.Success -> {
                     isLoading.value = true
-                    episodes.value = result.data!!
+                    result.data?.let {
+                        episodes.value = it
+                    } ?: run {
+                        error.value = "no episodes found with ids: $ids\""
+                    }
                 }
                 is Result.Error -> {
                     isLoading.value = false
@@ -71,7 +80,7 @@ class CharacterDetailsViewModel @Inject constructor(
     }
 
     fun saveFavourite(id: Int, isFavourite: Boolean) = viewModelScope.launch {
-        if(isFavourite) {
+        if (isFavourite) {
             localDataSource.saveFavourite(StarredEntity(id, Date().time))
         } else {
             localDataSource.deleteFavourite(id)

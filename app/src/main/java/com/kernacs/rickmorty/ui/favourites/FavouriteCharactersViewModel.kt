@@ -31,7 +31,7 @@ class FavouriteCharactersViewModel @Inject constructor(
                     is Result.Success -> {
                         isLoading.value = false
                         Log.d(TAG, "Refresh of the character data is successful: ${result.data}")
-                        result.data!!
+                        result.data
                     }
                     is Result.Error -> {
                         Log.d(TAG, "Error during data refresh: ${result.exception}")
